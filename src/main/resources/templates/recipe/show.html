@@ -15,6 +15,7 @@
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.5.3/js/bootstap.min.js}"></script>
 </head>
 <body>
+<!--/*@thymesVar id="recipe" type="guru.springframework.spring5recipeapp.domain.Recipe"*/-->
 <div class="container-fluid">
     <div class="row">
         <div class="mx-auto col-md-6">
@@ -29,9 +30,10 @@
                         </div>
                         <div class="col-md-9">
                             <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item">cat one</li>
-                                <li class="list-group-item">cat two</li>
-                                <li class="list-group-item">cat three</li>
+                                <li th:remove="all" class="list-group-item">cat one</li>
+                                <li th:remove="all" class="list-group-item">cat two</li>
+                                <li th:each="category : ${recipe.categories}"
+                                    th:text="${category.description}" class="list-group-item">cat three</li>
                             </ul>
                         </div>
                     </div>
@@ -40,13 +42,13 @@
                             <h5>Prep Time:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p>30 min</p>
+                            <p th:text="${recipe.prepTime} + ' min'">30 min</p>
                         </div>
                         <div class="col-md-3">
                             <h5>Difficulty:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p>Easy</p>
+                            <p th:text="${recipe.difficulty.name()}">Easy</p>
                         </div>
                     </div>
                     <div class="row">
@@ -54,13 +56,13 @@
                             <h5>Cooktime:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p>30 min</p>
+                            <p th:text="${recipe.cookTime} + ' min'">30 min</p>
                         </div>
                         <div class="col-md-3">
                             <h5>Servings:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p>4</p>
+                            <p th:text="${recipe.servings}">4</p>
                         </div>
                     </div>
                     <div class="row">
@@ -68,13 +70,13 @@
                             <h5>Source:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p>30 min</p>
+                            <p th:text="${recipe.source}">30 min</p>
                         </div>
                         <div class="col-md-3">
                             <h5>URL:</h5>
                         </div>
                         <div class="col-md-3 d-inline-block text-truncate">
-                            <a class="card-link" href="#">http://www.example.com</a>
+                            <a th:href="${recipe.url}" th:text="${recipe.url}" class="card-link" href="#" target="_blank">http://www.example.com</a>
                         </div>
                     </div>
                 </div>
@@ -87,9 +89,11 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-6">
                             <ul class="list-group shadow-sm">
-                                <li class="list-group-item">1 Cup of milk</li>
-                                <li class="list-group-item">1 Teaspoon of chocolate</li>
-                                <li class="list-group-item">1 Teaspoon of Sugar</li>
+                                <li th:remove="all" class="list-group-item">1 Cup of milk</li>
+                                <li th:remove="all" class="list-group-item">1 Teaspoon of chocolate</li>
+                                <li th:each="ingredient : ${recipe.ingredients}"
+                                    th:text="${ingredient.amount} + ' ' + ${ingredient.uom.description}
+                                    + ' of ' + ${ingredient.description}" class="list-group-item">1 Teaspoon of Sugar</li>
                             </ul>
                         </div>
                     </div>
@@ -102,7 +106,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                            <p th:text="${recipe.directions}" class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                                 commodo ligula eget
                                 dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
                                 nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
@@ -127,7 +131,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                            <p th:text="${recipe.notes.recipeNotes}" class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
                                 commodo ligula eget
                                 dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
                                 nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
